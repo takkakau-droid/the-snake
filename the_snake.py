@@ -65,10 +65,11 @@ class GameObject:
 class Apple(GameObject):
     """Класс, описывающий яблоко."""
 
-    def __init__(self):
+    def __init__(self, snake_positions=None):
         """Инициализирует яблоко."""
         super().__init__()
         self.body_color = APPLE_COLOR
+        self.randomize_position(snake_positions if snake_positions else [])
 
     def randomize_position(self, snake_positions):
         """Устанавливает случайную позицию яблока, избегая клеток змейки."""
@@ -94,6 +95,7 @@ class Snake(GameObject):
         super().__init__()
         self.body_color = SNAKE_COLOR
         self.reset()
+        self.direction = RIGHT
 
     def get_head_position(self):
         """Возвращает координаты головы змейки."""
@@ -167,9 +169,7 @@ def main():
     pg.init()
 
     snake = Snake()
-    apple = Apple()
-
-    apple.randomize_position(snake.positions)
+    apple = Apple(snake.positions)
 
     while True:
         clock.tick(SPEED)
